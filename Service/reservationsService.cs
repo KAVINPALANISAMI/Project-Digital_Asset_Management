@@ -28,13 +28,9 @@ namespace Project.Service
         {
             try
             {        
-
-
                 Console.WriteLine("Reservation Data ");
-
                 List<reservations> reslist = _ireservationsRepository.GetAllReservation();
                 foreach (reservations emp in reslist) { Console.WriteLine(emp); }
-
             }
             catch (EmployeeIdNotFound ex) { Console.WriteLine(ex.Message); }
             catch (NotManager ex) { Console.WriteLine(ex.Message); }
@@ -43,10 +39,8 @@ namespace Project.Service
 
         public void ReserveAsset()
         {
-
             try
             {
-
                 Console.WriteLine("Reserve Asset");
                 Console.WriteLine("Enter assert Id");
                 int assid = int.Parse(Console.ReadLine());

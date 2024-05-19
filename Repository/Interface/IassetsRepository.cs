@@ -20,5 +20,7 @@ namespace Project.Repository.Interface
         public assets GetAsset(int empid);
 
         public assets GetAsset();
+
+        public bool MaintenanceCheckInAsset(int assid, DateTime resdate);
     }
 }

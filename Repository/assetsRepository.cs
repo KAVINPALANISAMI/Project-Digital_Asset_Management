@@ -238,5 +238,28 @@ namespace Project.Repository
             catch (Exception ex) { Console.WriteLine(ex.Message); }
             return ass;
         }
+
+        public bool MaintenanceCheckInAsset(int assid, DateTime resdate)
+        {
+            
+            DateTime maintaindate = default;
+            try
+            {
+                cmd.Parameters.Clear();
+                cmd.CommandText = "select  purchase_date from assets where asset_id=@id ";
+                cmd.Parameters.AddWithValue("@id", assid);
+                cmd.Connection = sqlConnection;
+                sqlConnection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    maintaindate = (DateTime)reader["purchase_date"];
+                }
+                sqlConnection.Close();
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            if (resdate == maintaindate) { return false; }
+            else { return true; }
+        }
     }
 }
