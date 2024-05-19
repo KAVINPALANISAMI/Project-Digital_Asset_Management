@@ -15,5 +15,7 @@ namespace Project.Repository.Interface
         public maintenance_records GetAddedMaintenance_Records();
 
         public bool MaintenanceCompleted(int assetid);
+
+        public bool MaintenanceCheckInManagement(int assid,DateTime resdate);
     }
 }

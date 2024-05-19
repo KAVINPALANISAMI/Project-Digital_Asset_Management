@@ -120,5 +120,28 @@ namespace Project.Repository
             catch (Exception ex) { Console.WriteLine(ex.Message); }
             return rec;
         }
+
+        public bool MaintenanceCheckInManagement(int assid,DateTime resdate)
+        {
+            DateTime maintaindate = default;
+            try
+            {
+                cmd.Parameters.Clear();
+                cmd.CommandText = "select top 1 maintenance_date from maintenance_records " +
+                    "where asset_id=@id order by maintenance_date desc";
+                cmd.Parameters.AddWithValue("@id", assid);
+                cmd.Connection = sqlConnection;
+                sqlConnection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    maintaindate = (DateTime)reader["maintenance_date"];                    
+                }
+                sqlConnection.Close();
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+           if(resdate==maintaindate) { return false; }
+           else { return true; }
+        }
     }
 }
