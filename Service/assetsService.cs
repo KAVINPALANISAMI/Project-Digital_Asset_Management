@@ -176,8 +176,8 @@ namespace Project.Service
                 Console.WriteLine("****************************");
                 Console.ResetColor();
 
-                IassetsService _IassetsService = new assetsService();
-                _IassetsService.GetAllAssetdetails();
+               // IassetsService _IassetsService = new assetsService();
+                //_IassetsService.GetAllAssetdetails();
 
                 Console.ForegroundColor = ConsoleColor.Blue;
 

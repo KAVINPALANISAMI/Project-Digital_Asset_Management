@@ -180,6 +180,11 @@ namespace Project.Service
                 IreservationsService _IreservationsService = new reservationsService();
                 _IreservationsService.GetAllReservation();
 
+                Console.ForegroundColor = ConsoleColor.Blue;
+
+                Console.WriteLine("Detais for Update  Status");
+                Console.ResetColor();
+
                 Console.WriteLine("Enter assert Id");
                 int assid = int.Parse(Console.ReadLine());
 
@@ -190,7 +195,12 @@ namespace Project.Service
                 if (isreserved) { throw new AssetNotReserved("Asset not found Reserved data"); }
 
                 bool Ressts = _ireservationsRepository.UpdateeRservationStatus(assid, "approved");
-                if (!Ressts) { Console.WriteLine("Reservation Status Updated"); }
+                if (!Ressts)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Reservation Status Updated"); 
+                    Console.ResetColor();
+                }
             }
             catch (Exception ex) {
                 Console.ForegroundColor = ConsoleColor.Red;
