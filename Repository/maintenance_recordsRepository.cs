@@ -26,7 +26,7 @@ namespace Project.Repository
             try
             {
                 cmd.Parameters.Clear();
-                cmd.CommandText = "insert into maintenance_records values(@id,@date,@dec,@cost)";                           
+                cmd.CommandText = "insert into maintenance_records values(@id,@date,@dec,@cost,'Under Maintenance')";                           
                 cmd.Parameters.AddWithValue("@id", assetid);
                 cmd.Parameters.AddWithValue ("@date", date);
                 cmd.Parameters.AddWithValue ("@dec", description);
@@ -63,6 +63,7 @@ namespace Project.Repository
                     rec.Maintenance_date = (DateTime)reader["maintenance_date"];
                     rec.Description = (string)reader["description"];
                     rec.Cost = (decimal)reader["cost"];
+                    rec.Status = (string)reader["status"];
                     list.Add(rec);
                 }
                 sqlConnection.Close();
@@ -79,8 +80,8 @@ namespace Project.Repository
             try
             {
                 cmd.Parameters.Clear();
-                cmd.CommandText = "delete from maintenance_records where asset_id=@assid";
-                cmd.Parameters.AddWithValue("@assid", assetid);
+                cmd.CommandText = "update maintenance_records set [status]='Maintenance Completed' where asset_id=@id";
+                cmd.Parameters.AddWithValue("@id", assetid);
                 cmd.Connection = sqlConnection;
                 sqlConnection.Open();
                 sts = cmd.ExecuteNonQuery();
@@ -113,6 +114,7 @@ namespace Project.Repository
                     rec.Maintenance_date = (DateTime)reader["maintenance_date"];
                     rec.Description = (string)reader["description"];
                     rec.Cost = (decimal)reader["cost"];
+                    rec.Status= (string)reader["status"];
                     
                 }
                 sqlConnection.Close();
@@ -124,6 +126,9 @@ namespace Project.Repository
         public bool MaintenanceCheckInManagement(int assid,DateTime resdate)
         {
             DateTime maintaindate = default;
+            DateTime refdate = default;
+            TimeSpan span;
+            int year=0;
             try
             {
                 cmd.Parameters.Clear();
@@ -138,10 +143,16 @@ namespace Project.Repository
                     maintaindate = (DateTime)reader["maintenance_date"];                    
                 }
                 sqlConnection.Close();
+
+                 
+               
+                year =(resdate.Year-maintaindate.Year);
+               
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
-           if(resdate==maintaindate) { return false; }
-           else { return true; }
+            
+            if ((year>2)||(maintaindate==refdate)) { return true; }
+           else { return false; }
         }
     }
 }

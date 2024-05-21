@@ -19,6 +19,8 @@ namespace Project.Model
         public string  Status { get; set; }
         public employees Owner_id { get; set; }
 
+        
+
         public assets()
         {
             Owner_id = new employees();
@@ -32,6 +34,7 @@ namespace Project.Model
             Location=location;
             Status = stauts;
             Owner_id = ownerid;
+           
         }
 
         public override string ToString() 

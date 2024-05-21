@@ -9,10 +9,12 @@ namespace Project
         }
         static void Main(string[] args)
         {
-            
-            AssetManagementApp assetManagementApp = new AssetManagementApp();
-            assetManagementApp.Run();
- 
+
+            Asset_Management_App asset_Management_Ap =new Asset_Management_App();
+            asset_Management_Ap.Run();
+
+
+
 
         }
     }

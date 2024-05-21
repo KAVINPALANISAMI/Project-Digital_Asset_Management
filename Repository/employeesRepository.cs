@@ -24,12 +24,13 @@ namespace Project.Repository
             try
             {
                 cmd.Parameters.Clear();
-                cmd.CommandText = "insert into employees values(@name,@dep,@mail,@password)";
+                cmd.CommandText = "insert into employees values(@name,@dep,@mail,@password,@sts)";
 
                 cmd.Parameters.AddWithValue("@name", emp.Name);
                 cmd.Parameters.AddWithValue("@dep", emp.Department);
                 cmd.Parameters.AddWithValue("@mail",emp.Email);
                 cmd.Parameters.AddWithValue("@password", emp.Password);
+                cmd.Parameters.AddWithValue("@sts", emp.Status);
                 cmd.Connection = sqlConnection;
                 sqlConnection.Open();
                 status = cmd.ExecuteNonQuery();
@@ -57,6 +58,7 @@ namespace Project.Repository
                     emp.Name = (string)reader["name"];
                     emp.Department = (string)reader["department"];
                     emp.Email = (string)reader["email"];
+                    emp.Status = (string)reader["AdminOrUser"];
                     emplist.Add(emp);
                 }
                 sqlConnection.Close();
@@ -84,7 +86,8 @@ namespace Project.Repository
                     emp.Name = (string)reader["name"];
                     emp.Department = (string)reader["department"];
                     emp.Email = (string)reader["email"];
-                   
+                    emp.Status = (string)reader["AdminOrUser"];
+
                 }
                 sqlConnection.Close();
             }
@@ -112,6 +115,7 @@ namespace Project.Repository
                     emp.Name = (string)reader["name"];
                     emp.Department = (string)reader["department"];
                     emp.Email = (string)reader["email"];
+                    emp.Status = (string)reader["AdminOrUser"];
 
                 }
                 sqlConnection.Close();
@@ -162,14 +166,15 @@ namespace Project.Repository
             }
         }
 
-        public bool Login(int empid, string password)
+        public bool Login(int empid, string password, string adminOrUser)
         {
             string dbpassword="";
             try
             {
                 cmd.Parameters.Clear();
-                cmd.CommandText = "select [password] from employees where employee_id=@id";
+                cmd.CommandText = "select [password] from employees where employee_id=@id and AdminOrUser=@adminoeuser";
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = empid;
+                cmd.Parameters.AddWithValue("@adminoeuser", adminOrUser);
                 cmd.Connection = sqlConnection;
                 sqlConnection.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -212,8 +217,7 @@ namespace Project.Repository
             try
             {
                 cmd.Parameters.Clear();
-                cmd.CommandText = "update employees set name =@name,department=@dep," +
-                    "email=@email,[password]=@password where employee_id=@id";
+                cmd.CommandText = "update employees set [name] =@name,department=@dep,email=@email,[password]=@password,AdminOrUser=@sts where employee_id=@id";
 
                 cmd.Parameters.AddWithValue("@id", emp.Employee_id);
 
@@ -221,6 +225,7 @@ namespace Project.Repository
                 cmd.Parameters.AddWithValue("@dep", emp.Department);
                 cmd.Parameters.AddWithValue("@email", emp.Email);
                 cmd.Parameters.AddWithValue("@password", emp.Password);
+                cmd.Parameters.AddWithValue("@sts",emp.Status);
                 cmd.Connection = sqlConnection;
                 sqlConnection.Open();
                 status = cmd.ExecuteNonQuery();

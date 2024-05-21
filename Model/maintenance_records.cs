@@ -13,6 +13,7 @@ namespace Project.Model
         public DateTime Maintenance_date { get; set; }
         public string Description { get; set; }
         public decimal Cost { get; set; }
+        public string Status { get; set; }
 
         public maintenance_records()
         {
@@ -20,7 +21,7 @@ namespace Project.Model
         }
         public override string ToString()
         {
-            return $"Maintenanct Id::{Maintenance_id}\tAssertID::{Asset_id.Asset_id}\t Date::{Maintenance_date}\t Description::{Description}\tCost ::{Cost} ";
+            return $"Maintenanct Id::{Maintenance_id}\tAssertID::{Asset_id.Asset_id}\t Date::{Maintenance_date}\t Description::{Description}\tCost ::{Cost}\tStauts::{Status} ";
         }
 
     }
