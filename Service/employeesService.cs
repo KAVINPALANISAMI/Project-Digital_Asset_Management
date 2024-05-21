@@ -26,19 +26,25 @@ namespace Project.Service
             {
                employees emp=new employees();
 
-                Console.WriteLine("Enter your Employee Id");
-                int empid=int.Parse(Console.ReadLine());
-                bool available = _IemployeesRepository.IsManager(empid);
-                if (available) { throw new NotManager("This is only accable to Managers"); }
+                // Console.WriteLine("Enter your Employee Id");
+                //int empid=int.Parse(Console.ReadLine());
+                //  bool available = _IemployeesRepository.IsManager(empid);
+                // if (available) { throw new NotManager("This is only accable to Managers"); }
 
 
-                Console.WriteLine("Enter Password");
-                string password = Console.ReadLine();
+                //  Console.WriteLine("Enter Password");
+                // string password = Console.ReadLine();
 
-                bool result = _IemployeesRepository.Login(empid, password);
-                if (!result) { Console.WriteLine("Id password not match"); }
+                //bool result = _IemployeesRepository.Login(empid, password);
+                //if (!result) { Console.WriteLine("Id password not match"); }
 
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("Add Employee");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("****************************");
+                Console.ResetColor();
+
+               
                 Console.WriteLine("Enter Employee Name");
                 emp.Name = Console.ReadLine();
 
@@ -52,23 +58,46 @@ namespace Project.Service
                 Console.WriteLine("Enter Password");
                 emp.Password= Console.ReadLine();
 
-
+                emp.Status = "User";
                 bool status = _IemployeesRepository.AddEmployee(emp);
-                if (status) { Console.WriteLine("Employee added"); }
+                if (status) {
+                    Console.ForegroundColor = ConsoleColor.Green;
+
+                    Console.WriteLine("*********Employee added**********");
+                Console.ResetColor();
+                }
                 else
-                { Console.WriteLine("Employee not added"); }
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+
+                    Console.WriteLine("*********Employee not added*************");
+                    Console.ResetColor();
+
+                }
 
                 employees empup = _IemployeesRepository.GetEmployee();
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+
                 Console.WriteLine("Added Employee Details");
+                Console.ResetColor();
+
                 Console.WriteLine(empup);
             }
 
-            catch (NotManager ex) {  Console.WriteLine(ex.Message); }
-            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            catch (NotManager ex) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+            }
+            catch (Exception ex) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+            }
 
         }
 
-        public bool Login()
+        public bool Login(string adminOrUser )
         {
             bool result = false;
             try
@@ -84,11 +113,19 @@ namespace Project.Service
                 Console.WriteLine("Enter Password");
                 string password= Console.ReadLine();
 
-                result=_IemployeesRepository.Login(empid, password);
+                result=_IemployeesRepository.Login(empid, password,adminOrUser);
                 if (!result) { Console.WriteLine("Id password not match"); }
             }                    
-            catch (EmployeeIdNotFound ex) { Console.WriteLine(ex.Message); }           
-            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            catch (EmployeeIdNotFound ex) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+            }           
+            catch (Exception ex) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+            }
             return result;
 
         }
@@ -97,19 +134,25 @@ namespace Project.Service
         {
             try
             {
-                Console.WriteLine("Enter your Employee Id");
-                int mempid = int.Parse(Console.ReadLine());
+                // Console.WriteLine("Enter your Employee Id");
+                // int mempid = int.Parse(Console.ReadLine());
 
-                bool available = _IemployeesRepository.IsManager(mempid);
-                if (available) { throw new NotManager("This is only accable to Managers"); }
+                //  bool available = _IemployeesRepository.IsManager(mempid);
+                //  if (available) { throw new NotManager("This is only accable to Managers"); }
 
-                Console.WriteLine("Enter Password");
-                string password = Console.ReadLine();
-                bool result = _IemployeesRepository.Login(mempid, password);
-                if (!result) { throw new NotManager("Id password not match"); }
+                //  Console.WriteLine("Enter Password");
+                // string password = Console.ReadLine();
+                // bool result = _IemployeesRepository.Login(mempid, password);
+                //  if (!result) { throw new NotManager("Id password not match"); }
 
 
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("Remove Employee");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("****************************");
+                Console.ResetColor();
+
+              
                 Console.WriteLine("Enter Employee Id");
                 int empid = int.Parse(Console.ReadLine());
 
@@ -118,12 +161,33 @@ namespace Project.Service
 
 
                 bool status = _IemployeesRepository.RemoveEmployee(empid);
-                if (status) { Console.WriteLine("Employee Removed"); }
-                else { Console.WriteLine("Employee not Removed"); }
+                if (status) {
+                    Console.ForegroundColor = ConsoleColor.Green;
+
+                    Console.WriteLine("Employee Removed");
+                    Console.ResetColor();
+                }
+                else {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Employee not Removed");
+                    Console.ResetColor();
+                }
             }
-            catch (EmployeeIdNotFound ex) { Console.WriteLine(ex.Message); }
-            catch (NotManager ex) { Console.WriteLine(ex.Message); }
-            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            catch (EmployeeIdNotFound ex) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+            }
+            catch (NotManager ex) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+            }
+            catch (Exception ex) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+            }
         }
 
         public void UpdateEmployee()
@@ -132,23 +196,30 @@ namespace Project.Service
             {
                 employees emp = new employees();
 
-                Console.WriteLine("Enter your Employee Id");
-                int empid = int.Parse(Console.ReadLine());
+                ///// Console.WriteLine("Enter your Employee Id");
+                // int empid = int.Parse(Console.ReadLine());
 
-                bool available = _IemployeesRepository.IsManager(empid);
-                if (available) { throw new NotManager("This is only accable to Managers"); }
+                //  bool available = _IemployeesRepository.IsManager(empid);
+                //  if (available) { throw new NotManager("This is only accable to Managers"); }
 
-                Console.WriteLine("Enter Password");
-                string password=Console.ReadLine();
-                bool result = _IemployeesRepository.Login(empid, password);
-                if (!result) { throw new NotManager("Id password not match"); }
+                //// Console.WriteLine("Enter Password");
+                // string password=Console.ReadLine();
+                // bool result = _IemployeesRepository.Login(empid, password);
+                // if (!result) { throw new NotManager("Id password not match"); }
 
+
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("Update Employee");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("****************************");
+                Console.ResetColor();
+
+               
 
                 Console.WriteLine("Enter Employee Id");
                 emp.Employee_id=int.Parse(Console.ReadLine());
 
-                bool empidpresent = _IemployeesRepository.IsEmployeeIDAvailabe(empid);
+                bool empidpresent = _IemployeesRepository.IsEmployeeIDAvailabe(emp.Employee_id);
                 if (empidpresent) { throw new EmployeeIdNotFound("Employee Id not found"); }
 
 
@@ -166,46 +237,89 @@ namespace Project.Service
                 Console.WriteLine("Enter Password");
                 emp.Password = Console.ReadLine();
 
+                Console.WriteLine("Enter Status");
+                emp.Status = Console.ReadLine();
+
 
                 bool status = _IemployeesRepository.UpdateEmployee(emp);
-                if (status) { Console.WriteLine("Employee Updated"); }
+                if (status) {
+                    Console.ForegroundColor = ConsoleColor.Green;
+
+                    Console.WriteLine("***********Employee Updated**********");
+                    Console.ResetColor();
+                }
                 else
-                { Console.WriteLine("Employee not upadted"); }
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+
+                    Console.WriteLine("Employee not upadted");
+                    Console.ResetColor();
+                }
 
                 employees empup=_IemployeesRepository.GetEmployee(emp.Employee_id);
                 Console.WriteLine("Updated Details");
                 Console.WriteLine(empup);
             }
-            catch (EmployeeIdNotFound ex) { Console.WriteLine(ex.Message); }
-            catch (NotManager ex) { Console.WriteLine(ex.Message); }
-            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            catch (EmployeeIdNotFound ex) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+            }
+            catch (NotManager ex) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+            }
+            catch (Exception ex) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+            }
         }
 
         public void GetAllEmployees()
         {
             try
             {
-                Console.WriteLine("Enter your Employee Id");
-                int mempid = int.Parse(Console.ReadLine());
+                // Console.WriteLine("Enter your Employee Id");
+                // int mempid = int.Parse(Console.ReadLine());
 
-                bool available = _IemployeesRepository.IsManager(mempid);
-                if (available) { throw new NotManager("This is only accable to Managers"); }
+                //  bool available = _IemployeesRepository.IsManager(mempid);
+                // if (available) { throw new NotManager("This is only accable to Managers"); }
 
-                Console.WriteLine("Enter Password");
-                string password = Console.ReadLine();
-                bool result = _IemployeesRepository.Login(mempid, password);
-                if (!result) { throw new NotManager("Id password not match"); }
+                //  Console.WriteLine("Enter Password");
+                //  string password = Console.ReadLine();
+                // bool result = _IemployeesRepository.Login(mempid, password);
+                // if (!result) { throw new NotManager("Id password not match"); }
 
 
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("Employee Data ");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("****************************");
+                Console.ResetColor();
+
+               
 
                 List<employees> emplist = _IemployeesRepository.GetAllEmployees();
                 foreach (employees emp in emplist) {  Console.WriteLine(emp); }
                
             }
-            catch (EmployeeIdNotFound ex) { Console.WriteLine(ex.Message); }
-            catch (NotManager ex) { Console.WriteLine(ex.Message); }
-            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            catch (EmployeeIdNotFound ex) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+            }
+            catch (NotManager ex) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+            }
+            catch (Exception ex) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+            }
         }
     }
 }

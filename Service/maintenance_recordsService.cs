@@ -25,7 +25,13 @@ namespace Project.Service
         {
             try
             {
-                Console.WriteLine("Performance MAintenance");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("Performance Maintenance");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("****************************");
+                Console.ResetColor();
+
+               
                 Console.WriteLine("Enter asset Id");
                 int assetid = int.Parse(Console.ReadLine());
 
@@ -40,9 +46,19 @@ namespace Project.Service
                 string description= Console.ReadLine();
                 Console.WriteLine("Enter Cost");
                 decimal cost=decimal.Parse(Console.ReadLine());
+
                 bool status = _maintenance_recordsRepository.PerformMaintenance(assetid, date, description, cost);
-                if (status) { Console.WriteLine("Addet to asset maintainance "); }
-               else { Console.WriteLine("Not Addet to asset maintainance "); }
+                if (status) {
+                    Console.ForegroundColor = ConsoleColor.Green;
+
+                    Console.WriteLine("Addet to asset maintainance ");
+                    Console.ResetColor();
+                }
+                else {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Not Addet to asset maintainance ");
+                    Console.ResetColor();
+                }
 
 
                 bool asssts = _IassetsRepository.UpdateAssetStatus(assetid, "under maintenance");
@@ -50,50 +66,112 @@ namespace Project.Service
 
 
                 bool ressts = _reservationsRepository.WithdrawReservation(assetid);
-               if (!ressts) { throw new AssertStatusException("Not Deleded -Reservation"); }
+               //if (!ressts) { throw new AssertStatusException("Not Deleded -Reservation"); }
 
                 bool allsts = _asset_allocationsRepository.DeallocateAsset(assetid);
-                if (allsts) { throw new AssertStatusException("Not Deleded -Reservation"); }
+                //if (allsts) { throw new AssertStatusException("Not Deleded -Reservation"); }
 
-
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("Added Asset to Maintenance");      
+                Console.ResetColor();
                 maintenance_records rec =_maintenance_recordsRepository.GetAddedMaintenance_Records();
                 Console.WriteLine(rec);
 
             }
-            catch (AssetIdNotFound ex) { Console.WriteLine(ex.Message); }
-            catch(AssertStatusException ex) {  Console.WriteLine(ex.Message); }
-            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            catch (AssetIdNotFound ex) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+
+            }
+            catch (AssertStatusException ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+            }
         }
 
         public void ViewPerformMaintenance()
         {
-            Console.WriteLine(  "Performance Maintenance data");
-            List<maintenance_records> list = _maintenance_recordsRepository.ViewPerformMaintenance();
-            foreach (maintenance_records record in list) 
-            { Console.WriteLine(record); }
+            try
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("Performance Maintenance data");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("****************************");
+                Console.ResetColor();
+
+
+              
+                List<maintenance_records> list = _maintenance_recordsRepository.ViewPerformMaintenance();
+                foreach (maintenance_records record in list)
+                { Console.WriteLine(record); }
+            }catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+            }
         }
 
         public void MaintenanceCompleted()
         {
             try
             {
-                Console.WriteLine("Withdraw assert");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("Maintenance of assert Completed");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("****************************");
+                Console.ResetColor();
+
+               
                 Console.WriteLine("Enter assert Id");
                 int assid = int.Parse(Console.ReadLine());
 
                 bool idpresent = _assetsRepository.IsAssetIdAvailabe(assid);
                 if (idpresent) { throw new AssetIdNotFound("Asset Id not found"); }
 
-                bool asssts = _IassetsRepository.UpdateAssetStatus(assid, "Available");
-                if (asssts) { throw new AssertStatusException("Asset ststus not updated"); }
+                
 
 
                 bool status = _maintenance_recordsRepository.MaintenanceCompleted(assid);
-                if (status) { Console.WriteLine("Asset in use"); }
-                else { Console.WriteLine("Asset not in use"); }
+                if (status)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+
+                    Console.WriteLine("Assert  Maintenance Completed");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+
+                    Console.WriteLine("Assert  Maintenance Not Completed");
+                    Console.ResetColor();
+                }
+
+
+                bool asssts = _IassetsRepository.UpdateAssetStatus(assid, "Available");
+                if (asssts) { throw new AssertStatusException("Asset ststus not updated"); }
             }
-            catch (AssetIdNotFound ex) { Console.WriteLine(ex.Message); }
-            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            catch (AssetIdNotFound ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();  }
         }
     }
 }

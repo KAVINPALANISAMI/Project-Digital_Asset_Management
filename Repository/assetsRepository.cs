@@ -241,8 +241,11 @@ namespace Project.Repository
 
         public bool MaintenanceCheckInAsset(int assid, DateTime resdate)
         {
-            
-            DateTime maintaindate = default;
+
+            DateTime purchasedate = default;
+            DateTime refdate = default;
+            TimeSpan span;
+            int year = 0;
             try
             {
                 cmd.Parameters.Clear();
@@ -253,13 +256,18 @@ namespace Project.Repository
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    maintaindate = (DateTime)reader["purchase_date"];
+                    purchasedate = (DateTime)reader["purchase_date"];
                 }
                 sqlConnection.Close();
+                
+                year = (resdate.Year - purchasedate.Year);
+                
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
-            if (resdate == maintaindate) { return false; }
-            else { return true; }
+      
+            if (year > 2) { return true; }
+            else { return false; }
+
         }
     }
 }

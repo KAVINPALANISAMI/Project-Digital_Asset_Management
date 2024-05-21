@@ -8,7 +8,7 @@ namespace Project.Service.Interface
 {
     internal interface IemployeesService
     {
-        public bool Login();
+        public bool Login(string adminOrUser);
 
         public void AddEmployee();
         public void RemoveEmployee();

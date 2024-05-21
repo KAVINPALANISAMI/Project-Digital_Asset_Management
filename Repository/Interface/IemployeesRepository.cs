@@ -11,7 +11,7 @@ namespace Project.Repository.Interface
     {
         public bool IsEmployeeIDAvailabe(int cusid);
 
-        public bool Login(int empid,string password);
+        public bool Login(int empid,string password,string adminOrUser);
 
 
         public bool IsManager(int empid);

@@ -13,6 +13,8 @@ namespace Project.Service.Interface
 
         public void GetAllReservation();
 
+        public void UpdateeRservationStatus();
+
 
     }
 }

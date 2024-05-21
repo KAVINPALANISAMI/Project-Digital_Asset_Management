@@ -13,10 +13,11 @@ namespace Project.Model
         public string Department { get; set; }
         public string Email { get; set; }
         public string  Password { get; set; }
+        public string Status { get; set; }
 
         public override string ToString()
         {
-            return $"EmpliyeeId::{Employee_id}\tName::{Name}\tDepartment::{Department}\tEmail::{Email}";
+            return $"EmpliyeeId::{Employee_id}\tName::{Name}\tDepartment::{Department}\tEmail::{Email}\tAdminOrUser::{Status}";
         }
 
     }
